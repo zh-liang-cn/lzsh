@@ -3,6 +3,7 @@ lzsh
 
 vim configuration files
 
+
 Install
 =====
 
@@ -24,4 +25,15 @@ Plugins list
 * [vim-snipmate](https://github.com/garbas/vim-snipmate.git)
 * [vim-snippets](https://github.com/honza/vim-snippets.git)
 * [bufexplorer](https://github.com/corntrace/bufexplorer.git)
+* [vim-markdown](https://github.com/plasticboy/vim-markdown.git)
 
+
+Dev Notes
+====
+
+Add a pathogen package
+
+    git submodule add https://github.com/plasticboy/vim-markdown.git bundle/vim-markdown
+    git commit -am 'commit message'
+    git push
+    
