@@ -1,3 +1,5 @@
+" see https://github.com/tpope/vim-pathogen#faq
+source ~/.lzsh/bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect("~/.lzsh/bundle/{}")
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
