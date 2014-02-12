@@ -10,8 +10,10 @@ Install
     cd ~
     git clone https://github.com/zhlwish/lzsh.git .lzsh
     echo "source ~/.lzsh/rcfiles/vimrc" >> ~/.vimrc 
+    echo "source ~/.lzsh/rcfiles/zshrc" >> ~/.zshrc 
+    echo "source ~/.lzsh/confs/tmux.conf" >> ~/.tmux.conf
 
-Plugins list
+VIM Plugins list
 =====
 
 * [ctrlp.vim](https://github.com/kien/ctrlp.vim.git)
@@ -26,7 +28,6 @@ Plugins list
 * [vim-snippets](https://github.com/honza/vim-snippets.git)
 * [bufexplorer](https://github.com/corntrace/bufexplorer.git)
 * [vim-markdown](https://github.com/plasticboy/vim-markdown.git)
-
 
 Dev Notes
 ====

@@ -1,0 +1,46 @@
+;;This is a common emacs configuration file created by Liang Zhou(zhlwish@gmail.com)
+;;
+;;Use it by add the following line in your own's .emacs
+;;
+;;    (load-file "~/.lzsh/emacsrc")
+;;
+;;Create at 2012-11-30 17:51
+
+;;系统剪贴板快捷键（C-c C-c复制，C-c C-v粘贴)
+;;http://kidneyball.iteye.com/blog/1014537
+(global-set-key "\C-c\C-c" 'clipboard-kill-ring-save)
+(global-set-key "\C-c\C-v" 'clipboard-yank)
+
+;;用C-z i快速打开~/.lzsh/emacsrc文件。
+(defun open-init-file()
+  (interactive)
+  (find-file "~/.lzsh/emacsrc"))
+
+(global-set-key "\C-x\C-i" 'open-init-file)
+
+;;隐藏工具条
+;;http://emacswiki.org/emacs/ToolBar
+(tool-bar-mode -1)
+
+;;隐藏菜单栏
+;;http://emacswiki.org/emacs/MenuBar
+(menu-bar-mode -1)
+
+;;隐藏右侧滚动条
+;;http://emacswiki.org/emacs/ScrollBar
+(scroll-bar-mode -1)
+
+;; ruby-mode 
+(autoload 'ruby-mode "ruby-mode"
+  "Mode for editing ruby source files" t)
+(setq auto-mode-alist
+      (append '(("\\.rb$" . ruby-mode)) auto-mode-alist))
+(setq interpreter-mode-alist 
+      (append '(("ruby" . ruby-mode)) interpreter-mode-alist))
+(autoload 'run-ruby "inf-ruby" 
+  "Run a inferior Ruby process")
+(autoload 'inf-ruby-keys "inf-ruby"
+  "Set local key defs for inf-ruby in ruby-mode")
+(add-hook 'ruby-mode-hook
+	  '(lambda ()
+	     (inf-ruby-keys)))
