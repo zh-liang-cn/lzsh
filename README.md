@@ -11,6 +11,7 @@ Install
     git clone https://github.com/zhlwish/lzsh.git .lzsh
     echo "source ~/.lzsh/rcfiles/vimrc" >> ~/.vimrc 
     echo "source ~/.lzsh/rcfiles/zshrc" >> ~/.zshrc 
+    echo "(load-file \"~/.lzsh/rcfiles/emacs\")" >> ~/.emacs
     echo "source ~/.lzsh/confs/tmux.conf" >> ~/.tmux.conf
 
 VIM Plugins list
