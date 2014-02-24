@@ -127,16 +127,25 @@ set tm=500
 " Enable syntax highlighting
 syntax enable
 
-colorscheme solarized 
-set guifont=Monaco:h12
 set background=dark
 
 " Set extra options when running in GUI mode
 if has("gui_running")
-    set guioptions-=T
-    set guioptions+=e
-    set t_Co=256
-    set guitablabel=%M\ %t
+  colorscheme solarized 
+  set guioptions-=T
+  set guioptions+=e
+  set t_Co=256
+  set guitablabel=%M\ %t
+
+  if has("gui_gtk2")
+    set guifont=Inconsolata\ 11
+  elseif has("gui_macvim")
+    set guifont=Monaco:h12
+  elseif has("gui_win32")
+    set guifont=courier_new:h12:b:cANSI
+  endif
+else
+  colorscheme darkblue
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
