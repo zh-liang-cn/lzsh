@@ -412,7 +412,7 @@ endfunction
 " => CoffeeScript
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd QuickFixCmdPost * nested cwindow | redraw!
-au BufWritePost *.coffee CoffeeMake! 
+au BufWritePost *.coffee make! 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerdtree 
