@@ -32,6 +32,7 @@ VIM Plugins list
 * [vim-snippets](https://github.com/honza/vim-snippets.git)
 * [bufexplorer](https://github.com/corntrace/bufexplorer.git)
 * [vim-markdown](https://github.com/plasticboy/vim-markdown.git)
+* [vim-scala](https://github.com/derekwyatt/vim-scala.git)
 
 Dev Notes
 ====
