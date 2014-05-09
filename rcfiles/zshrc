@@ -82,6 +82,9 @@ alias gb2u8='iconv -f gbk -t utf8 -c'
 alias u82gb='iconv -f utf8 -t gbk -c'
 alias cls='clear'
 
+# For Ubuntu xclip http://blog.csdn.net/pfanaya/article/details/7665853
+alias clip=' xclip -selection clipboard '
+
 # http://hi.baidu.com/hzd2712/item/5c0a4dd2d9a888e0785daaf6
 LANG=zh_CN.UTF-8
 export LANG
