@@ -61,9 +61,11 @@ zle -N user-ret
 bindkey "\r" user-ret
 # end see
 
+bindkey '\eq' push-line-or-edit
+
 alias proxy='nohup ssh -N -2 -D 7070 zhlwish@zhlwish.com -p 22 &'
 alias ctags-gen='ctags -R --languages=Ruby --exclude=log --exclude=tmp'
-alias ff='find ./ | xargs grep --color --line-number '
+alias ff='find ./ -type f | xargs grep --color --line-number '
 
 # User specific aliases and functions
 alias ll='ls -l'
@@ -82,8 +84,22 @@ alias gb2u8='iconv -f gbk -t utf8 -c'
 alias u82gb='iconv -f utf8 -t gbk -c'
 alias cls='clear'
 
+# Share current directory as a website
+alias hostdir="python -m SimpleHTTPServer"
+
 # For Ubuntu xclip http://blog.csdn.net/pfanaya/article/details/7665853
 alias clip=' xclip -selection clipboard '
+
+# The following java_ls and java_use can only be used on Mac OS platforms
+# from http://superuser.com/questions/490425/how-do-i-switch-between-java-7-and-java-6-on-os-x-10-8-2
+alias java_ls='/usr/libexec/java_home -V 2>&1 -a x86_64  | grep -E "\d.\d.\d[,_]" | cut -d , -f 1 | colrm 1 4 | grep -v Home'
+
+function java_use() {
+  export JAVA_HOME=$(/usr/libexec/java_home -v $1)
+  export PATH=$JAVA_HOME/bin:$PATH
+  java -version
+}
+
 
 # http://hi.baidu.com/hzd2712/item/5c0a4dd2d9a888e0785daaf6
 LANG=zh_CN.UTF-8
