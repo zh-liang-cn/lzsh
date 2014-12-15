@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# TODO support kde
+
+mac_cmd="/usr/bin/open"
+gnome_cmd="/usr/bin/nautilus"
+
+# not used, will open current directory by default
+function usage
+{
+  echo "Usage: $0 path [path ...]"
+}
+
+function open
+{
+  case "$OSTYPE" in
+    darwin*) `${mac_cmd} "$@"`;;
+    linux*) `${gnome_cmd} "$@"` ;;
+    *) echo "$OSTYPE is not supportted yet";;
+  esac
+}
+
+if [ $# -gt 0 ]; then
+  open "$@"
+else
+  open ./
+  # usage
+fi
+
+

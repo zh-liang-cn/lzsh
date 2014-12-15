@@ -100,6 +100,8 @@ function java_use() {
   java -version
 }
 
+# add shell search paths
+export PATH=~/.lzsh/shells:$PATH
 
 # http://hi.baidu.com/hzd2712/item/5c0a4dd2d9a888e0785daaf6
 LANG=zh_CN.UTF-8
