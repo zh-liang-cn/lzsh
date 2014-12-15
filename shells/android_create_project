@@ -1,0 +1,78 @@
+#!/bin/bash
+
+DEFAULT_PKG_PREFIX="pro.zhouliang"
+DEFAULT_ACTIVITY="MainActivty"
+DEFAULT_PATH_PREFIX="."
+DEFAULT_USE_GRADLE='y'
+DEFAULT_GRADLE_VERSION="0.13.2"
+DEFAULT_TARGET="android-21"
+
+declare prj_name=""
+declare prj_pkg=""
+declare prj_activity=""
+declare prj_path=""
+declare prj_target=""
+declare prj_gradle=""
+declare prj_gradle_version=""
+
+function read_prj_name() {
+  read -p "Project name : " tmp_prj_name
+  if [[ -n $tmp_prj_name ]]; then
+    prj_name=$tmp_prj_name
+  else
+    echo "Project name cannot be null"
+    read_prj_name
+  fi
+}
+
+function read_prj_pkg() {
+  lower_prj_name=`echo -n ${prj_name} | tr [:upper:] [:lower:]`
+  prj_pkg="${DEFAULT_PKG_PREFIX}.${lower_prj_name}"
+  read -p "Package [${prj_pkg}] : " tmp_prj_pkg
+  [[ -n $tmp_prj_pkg ]] && prj_pkg=$tmp_prj_pkg
+}
+
+function read_activity() {
+  prj_activity="${DEFAULT_ACTIVITY}"
+  read -p "Activity [${prj_activity}] : " tmp_prj_activity
+  [[ -n $tmp_prj_activity ]] && prj_activity=$tmp_prj_activity
+}
+
+# TODO check path is exists
+function read_path() {
+  prj_path="${DEFAULT_PATH_PREFIX}/${prj_name}"
+  read -p "Path [${prj_path}] : " prj_path_path
+  [[ -n $tmp_prj_path ]] && prj_path=$tmp_prj_path
+}
+
+function read_target() {
+  prj_target="${DEFAULT_TARGET}"
+  read -p "Target [${prj_target}] : " tmp_prj_target
+  [[ -n $tmp_prj_target ]] && prj_target=$tmp_prj_target
+}
+
+function read_gradle() {
+  prj_gradle="${DEFAULT_USE_GRADLE}"
+  prj_gradle_version="${DEFAULT_GRADLE_VERSION}"
+  # TODO handle prj_gradle
+  read -p "Use gradle [${prj_gradle}] : " tmp_prj_gradle
+  read -p "Gradle version [${prj_gradle_version}] : " tmp_prj_gradle_version
+
+  [[ -n $tmp_prj_gradle ]] && prj_gradle=$tmp_prj_gradle
+  [[ -n $tmp_prj_gradle_version ]] && prj_gradle_version=$tmp_prj_gradle_version
+}
+
+# TODO log message to log file
+function run_command() {
+  cmd="android create project --name ${prj_name} --package ${prj_pkg} --activity ${prj_activity} --path ${prj_path} --target ${prj_target} --gradle --gradle-version ${prj_gradle_version}"
+  echo "Executing: ${cmd}"
+  exec ${cmd}
+}
+
+read_prj_name
+read_prj_pkg
+read_activity
+read_path
+read_target
+read_gradle
+run_command
