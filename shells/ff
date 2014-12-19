@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# see https://raymii.org/s/snippets/Bash_Bits_Debug_Logging.html
+# see http://stackoverflow.com/questions/2188199/how-to-use-double-or-single-bracket-parentheses-curly-braces
+function debug() { (( DEBUG_LOG )) && echo "### $*"; }
+
+function usage()
+{
+  echo "Usage:"
+  echo "\tff [path...] expression"
+}
+
+function execute_find()
+{
+  # see http://stackoverflow.com/questions/12711786/bash-convert-command-line-arguments-into-array
+  args=( "$@" )
+  length=$#
+  # see http://stackoverflow.com/questions/8385627/bash-subtract-2-variables
+  last_pos=`expr $length - 1`
+  # last_pos=$(($length - 1))
+  # last_pos=$(expr $length - 1)
+  debug $args
+  debug $last_pos
+
+  expr=${args[$last_pos]}
+  # see http://leeon.me/a/linux-shell-array
+  args=${args[@]::$last_pos}
+  debug $expr
+  debug $args
+
+  if [ $last_pos -eq 0 ]
+  then
+    args=./
+  fi
+
+  find ${args} -type f | xargs grep --color --line-number --no-messages ${expr}
+}
+
+if [ $# -eq 0 ]
+then
+  usage
+else
+  execute_find "$@"
+fi
+
