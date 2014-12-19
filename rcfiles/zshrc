@@ -61,11 +61,8 @@ zle -N user-ret
 bindkey "\r" user-ret
 # end see
 
+# Ctrl+q to enqueue a command
 bindkey '\eq' push-line-or-edit
-
-alias proxy='nohup ssh -N -2 -D 7070 zhlwish@zhlwish.com -p 22 &'
-alias ctags-gen='ctags -R --languages=Ruby --exclude=log --exclude=tmp'
-alias ff='find ./ -type f | xargs grep --color --line-number '
 
 # User specific aliases and functions
 alias ll='ls -l'
