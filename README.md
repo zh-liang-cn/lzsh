@@ -9,6 +9,15 @@ Install
 
    curl -L https://raw.githubusercontent.com/zhlwish/lzsh/master/install.sh | sh 
 
+Commands
+=====
+
+1. `open` : launch the Finder on MacOS or Gnome File Manager and switch to current working directory
+2. `cd ...` : change the current working directory to *../../*, a convenience way
+3. `java_ls` : show all JDKs installed on this machine, only available on Mac OS
+4. `java_use` : switch between difference JDKs, only available on Mac OS
+5. `ff /path expr` : print all files that contains *expr* in */path* directory, */path* can ben omitted
+
 VIM Plugins list
 =====
 
