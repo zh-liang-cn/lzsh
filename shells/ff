@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 # see https://raymii.org/s/snippets/Bash_Bits_Debug_Logging.html
 # see http://stackoverflow.com/questions/2188199/how-to-use-double-or-single-bracket-parentheses-curly-braces
-function debug() { (( DEBUG_LOG )) && echo "### $*"; }
+function debug { (( DEBUG_LOG )) && echo "### $*"; }
 
 function usage()
 {
