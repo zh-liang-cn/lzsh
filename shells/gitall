@@ -1,0 +1,31 @@
+#!/bin/sh
+
+HIGHLIGHT='\033[0;33m'
+NC='\033[0m' # No Color
+
+function usage()
+{
+  echo "Usage:"
+  echo "\t$0 <path> <git command>"
+}
+
+function execute_gitall()
+{
+  for pk in `ls $1`
+  do
+    echo "\n${HIGHLIGHT}================== ${pk} ===================${NC}"
+    git --git-dir=$1/$pk/.git --work-tree=$1/$pk/ $2
+  done
+}
+
+if [ $# -lt 2 ]
+then
+  usage
+else
+  args=( "$@" )
+  path=${args[0]}
+  cmd=${args[@]:1}
+  execute_gitall $path $cmd
+fi
+
+
