@@ -1,0 +1,97 @@
+#!/usr/bin/env ruby
+#/* vim: set filetype=ruby : */
+
+# TODO support withpom
+# TODO support md5&sha1 validation
+
+require 'optparse'
+require 'fileutils'
+require 'open-uri'
+
+LOCAL_REPO_PATH = ENV['HOME'] + '/.m2/repository/'
+REMOTE_REPO_PATH = 'http://maven.oschina.net/content/groups/public/'
+RES_JAR = '.jar'
+RES_SRC = '-src.jar'
+RES_POM = '.pom'
+
+options = {}
+optparse = OptionParser.new do |opts|
+
+  options[:gradle] = nil
+  opts.on('-g', '--gradle GRADLE', 'Gradle dependency description') do |desc|
+    options[:gradle] = desc
+  end
+
+  options[:withsrc] = false
+  opts.on('-s', '--[no-]with-src', 'Download source code') do |src|
+    options[:withsrc] = src
+  end
+  
+  options[:dryrun] = false
+  opts.on('-d', '--dry-run', 'Print command but not execute') do 
+    options[:dryrun] = true
+  end
+
+  opts.on('-h', '--help', 'Display this help message') do
+    puts opts
+    exit
+  end
+
+end
+
+begin
+  optparse.parse!
+  mandatory = [:gradle]
+  missing = mandatory.select{ |param| options[param].nil? }
+  unless missing.empty?
+    puts "Missing options: #{missing.join(', ')}"
+    puts optparse
+    exit
+  end
+rescue OptionParser::InvalidOption, OptionParser::MissingArgument
+  puts $!.to_s
+  puts optparse
+  exit
+end
+
+def download(remote_url, local_path)
+  puts "Downloading: #{remote_url}"
+  success = true
+  File.open(local_path, 'wb') do |saved_file|
+    begin
+      open(remote_url, 'rb') do |read_file|
+        saved_file.write(read_file.read)
+      end
+      puts "Saved to: #{local_path}"
+    rescue OpenURI::HTTPError => e
+      success = false
+      if e.message == '404 Not Found'
+        puts "Unable to download #{remote_url}"
+      else
+        raise e
+      end
+    ensure
+      FileUtils.rm local_path unless success
+    end
+  end
+end
+
+group, artifact, version = options[:gradle].split(':') 
+path = options[:gradle].gsub(':', '/')
+
+# 1. mkdir -p
+local_path = LOCAL_REPO_PATH + path 
+puts "mkdir -p #{local_path}"
+FileUtils.mkpath(local_path) unless options[:dryrun]
+
+remote_path = REMOTE_REPO_PATH + path
+
+# 2. download
+resources = [RES_JAR]
+resources << RES_SRC if options[:withsrc]
+
+resources.each do |res|
+  res_seg = '/' + artifact + '-' + version + res
+  download(remote_path + res_seg, local_path + res_seg) unless options[:dryrun]
+end
+
