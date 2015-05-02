@@ -424,3 +424,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 
 " https://coderwall.com/p/xp9kjw
 cmap w!! %!sudo tee > /dev/null %
+
+" ft_sql: filetype plugin to work withe SQL files
+let g:sql_type_default = 'mysql'
