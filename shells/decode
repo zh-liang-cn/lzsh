@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+#/* vim: set filetype=ruby : */
+
+require 'optparse'
+require 'fileutils'
+require 'open-uri'
+
+DECODE_PROVIDER = {
+  msgpack: Proc.new do |content|
+    require 'msgpack'
+    MessagePack.unpack(content)   
+  end
+}
+
+ENCODE_PROVIDER = {
+  json: Proc.new do |content|
+    require 'json'
+    content.to_json
+  end,
+}
+
+options = {}
+optparse = OptionParser.new do |opts|
+
+  options[:file] = 'file'
+  opts.on('-f', '--file INPUT_FILE', 'Input file') do |file|
+    options[:file] = file 
+  end
+
+  options[:input] = 'msgpack'
+  opts.on('-i', '--input INPUT_ENCODING', 'Input encoding') do |src|
+    options[:input] = src
+  end
+  
+  options[:output] = 'json' 
+  opts.on('-o', '--output OUTPUT_ENCODING', 'Output encoding') do |dest|
+    options[:output] = dest 
+  end
+
+  opts.on('-h', '--help', 'Display this help message') do
+    puts opts
+    exit
+  end
+end
+
+begin
+  optparse.parse!
+  mandatory = [:file]
+  missing = mandatory.select{ |param| options[param].nil? }
+  unless missing.empty?
+    puts "Missing options: #{missing.join(', ')}"
+    puts optparse
+    exit
+  end
+rescue OptionParser::InvalidOption, OptionParser::MissingArgument
+  puts $!.to_s
+  puts optparse
+  exit
+end
+
+if (!File.exist?(options[:file])) 
+  puts "#{options[:file]} does not exist"
+  exit
+end 
+
+raw = File.read(options[:file]); 
+decoded = DECODE_PROVIDER[options[:input].to_sym].call(raw)
+encoded = ENCODE_PROVIDER[options[:output].to_sym].call(decoded)
+
+file = File.new("#{options[:file]}.#{options[:output]}", 'w')
+file.write(encoded)
+file.close()
