@@ -48,3 +48,6 @@
 	path = bundle/Align
 	url = https://github.com/vim-scripts/Align.git
 	ignore = untracked
+[submodule "bundle/nerdcommenter"]
+	path = bundle/nerdcommenter
+	url = https://github.com/scrooloose/nerdcommenter.git
